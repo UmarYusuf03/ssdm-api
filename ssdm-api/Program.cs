@@ -33,16 +33,24 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 // CORS — allow Angular dev + deployed frontend
-var allowedOrigins = builder.Configuration["AllowedOrigins"]?.Split(",")
-    ?? new[] { "http://localhost:4200" };
+var allowedOriginsConfig = builder.Configuration["AllowedOrigins"];
 
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins(allowedOrigins)
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        if (string.IsNullOrEmpty(allowedOriginsConfig) || allowedOriginsConfig == "*")
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        }
+        else
+        {
+            policy.WithOrigins(allowedOriginsConfig.Split(","))
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        }
     });
 });
 
