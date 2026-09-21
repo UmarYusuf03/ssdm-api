@@ -1,0 +1,315 @@
+🧠 PROJECT NAME
+
+Design a full SaaS web application UI called:
+
+“Smart Study & Deadline Manager (SSDM)”
+
+A productivity platform for university students to manage subjects, assignments, study schedules, deadlines, and performance analytics.
+
+The design should look like a real startup SaaS product (Notion / ClickUp / Linear style).
+
+🎨 VISUAL DESIGN SYSTEM (VERY IMPORTANT)
+🌈 Color Palette
+
+Use a modern SaaS palette:
+
+Primary: #4F46E5 (Indigo)
+Primary Hover: #4338CA
+Background: #F9FAFB
+Card Background: #FFFFFF
+Border: #E5E7EB
+Text Primary: #111827
+Text Secondary: #6B7280
+Status Colors:
+Success: #22C55E
+Warning: #F59E0B
+Danger: #EF4444
+Info: #3B82F6
+✍️ Typography
+Font: Inter (or Roboto if unavailable)
+Headings: Semi-bold (600–700)
+Body: Regular (400)
+Small text: 12–14px
+Titles: 18–28px
+📐 Layout System
+12-column grid (desktop)
+Max width: 1440px
+Sidebar width: 260px
+Top navbar height: 64px
+Card radius: 12px
+Button radius: 10px
+Spacing system: 8px base unit (8, 16, 24, 32, 48)
+🎭 UI STYLE
+Clean SaaS dashboard UI
+Soft shadows (not harsh)
+Subtle borders
+Smooth hover animations
+Card-based layout
+Minimal clutter
+Professional startup feel
+🧭 GLOBAL LAYOUT (ALL PAGES)
+🟪 LEFT SIDEBAR (FIXED)
+
+A vertical navigation sidebar containing:
+
+Top:
+App logo: “SSDM”
+Collapsible button (icon only mode)
+Menu Items:
+Dashboard
+Subjects
+Assignments
+Study Planner
+Calendar
+Progress Analytics
+Notifications
+Settings
+UI behavior:
+Active item highlighted with indigo background
+Hover effect with light gray highlight
+Icons + labels
+Collapsed mode shows only icons
+🟦 TOP NAVBAR (FIXED)
+Left: Page title (dynamic)
+Center: Search bar (rounded, placeholder “Search assignments, subjects…”)
+Right:
+Notification bell (with badge count)
+Theme toggle (light/dark)
+User avatar dropdown
+🏠 DASHBOARD PAGE (MAIN SCREEN)
+🧩 SECTION 1: KPI CARDS (TOP ROW)
+
+Create 4 large statistic cards:
+
+Total Subjects
+Pending Assignments
+Upcoming Deadlines
+Completion Rate (%)
+
+Each card includes:
+
+Icon inside colored circle
+Big number (e.g. 12, 5, 78%)
+Label
+Subtext (e.g. “+2 this week”)
+Hover lift effect
+📊 SECTION 2: MAIN CONTENT GRID
+
+Split layout:
+
+LEFT SIDE (70%) — DEADLINES PANEL
+
+Title: “Upcoming Deadlines”
+
+Each assignment item card includes:
+
+Subject tag (colored pill)
+Assignment title (bold)
+Due date (e.g. “Due in 2 days”)
+Priority badge:
+High (red)
+Medium (orange)
+Low (green)
+Progress indicator bar
+Three-dot menu (edit/delete)
+
+Sorting:
+
+closest due date first
+overdue items highlighted in red background tint
+RIGHT SIDE (30%) — TODAY’S STUDY PLAN
+
+Title: “Today’s Study Schedule”
+
+Each block contains:
+
+Time range (e.g. 6:00–7:30 PM)
+Subject name
+Topic (optional)
+Progress bar
+Start button
+
+Example blocks:
+
+6:00–7:30 → Data Structures
+7:30–8:30 → Database Systems
+
+Include:
+
+“Optimize Plan” button (AI feature placeholder)
+📚 SUBJECTS PAGE (DETAILED)
+Layout: Grid of subject cards (3 per row)
+
+Each subject card contains:
+
+Subject name (large text)
+Subject code (small text)
+Lecturer name (optional)
+Color indicator strip on left
+Progress bar (0–100%)
+Stats:
+Assignments count
+Completed count
+Button: “View Details”
+Floating Action Button:
+Bottom right: “+ Add Subject”
+Opens modal form
+📝 ASSIGNMENTS PAGE (ADVANCED TABLE UI)
+FILTER BAR (TOP)
+Subject dropdown
+Priority filter (High/Medium/Low)
+Status filter (Not Started / In Progress / Done)
+Search input
+TABLE DESIGN
+
+Columns:
+
+Assignment Title
+Subject
+Due Date
+Priority (colored badge)
+Status (dropdown editable)
+Progress bar
+Actions (Edit / Delete)
+Row behavior:
+Hover highlight
+Overdue rows tinted red
+Completed rows slightly faded
+ADD ASSIGNMENT MODAL
+
+Fields:
+
+Title
+Description (textarea)
+Subject dropdown
+Due date picker
+Priority selector
+Status selector
+
+Buttons:
+
+Save
+Cancel
+🧠 STUDY PLANNER PAGE (KEY FEATURE)
+LEFT PANEL (INPUT FORM)
+
+Fields:
+
+Available hours per day
+Study start time
+Subject priority selection (drag reorder)
+Exam dates input
+
+Button:
+
+“Generate Study Plan”
+RIGHT PANEL (OUTPUT SCHEDULE)
+
+Weekly planner layout:
+
+Days of week tabs (Mon–Sun)
+Time blocks per subject
+Color-coded subjects
+Drag & drop reordering
+
+AI logic display:
+
+“Based on your priorities, DSA gets 40% more time”
+📅 CALENDAR PAGE
+
+Full calendar UI:
+
+Month view default
+Week view toggle
+Day view option
+
+Each event:
+
+Color-coded assignment block
+Hover tooltip:
+Title
+Subject
+Due date
+Priority
+
+Drag & drop support:
+
+reschedule assignments
+📊 PROGRESS ANALYTICS PAGE
+TOP METRICS:
+Total study hours
+Completion rate
+Overdue tasks
+Productivity score
+CHARTS:
+Pie chart: Subject distribution
+Bar chart: Weekly study hours
+Line chart: productivity trend over time
+🔔 NOTIFICATIONS PAGE
+
+List format UI:
+
+Each notification card includes:
+
+Icon
+Message text
+Timestamp
+Type badge (info/warning/urgent)
+Mark as read button
+
+Examples:
+
+“DSA assignment due tomorrow”
+“You haven’t studied DBMS for 3 days”
+⚙️ SETTINGS PAGE
+
+Sections:
+
+Profile settings
+Password change
+Notification preferences toggles
+Theme switch (light/dark)
+Study reminder frequency slider
+📱 MOBILE RESPONSIVE DESIGN
+Behavior:
+Sidebar becomes hamburger menu
+Cards stack vertically
+Bottom navigation bar:
+Dashboard
+Assignments
+Planner
+Profile
+Mobile UX:
+Larger tap targets
+Simplified tables → cards
+Sticky action buttons
+✨ MICRO-INTERACTIONS
+Button hover animations (slight scale 1.02)
+Card shadow increase on hover
+Smooth page transitions
+Loading skeleton UI
+Toast notifications (success/error)
+Empty state illustrations
+🧩 DESIGN SYSTEM COMPONENTS
+
+Create reusable components:
+
+Button (primary, secondary, danger, ghost)
+Card (default, clickable, stats)
+Badge (priority, status)
+Input fields
+Modal dialogs
+Sidebar navigation item
+Progress bar
+Table row component
+Calendar event block
+🚀 FINAL OUTPUT REQUIREMENT
+
+Generate:
+
+Full high-fidelity SaaS dashboard UI
+Desktop + mobile screens
+Component-based design system
+Modern startup-quality UI
+Clean spacing, alignment, and grid consistency
+Ready to be converted into Angular + ASP.NET Core project

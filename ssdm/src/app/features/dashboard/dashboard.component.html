@@ -1,0 +1,138 @@
+<div class="space-y-6 page-transition">
+  @if (loading()) {
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      @for (_ of [1,2,3,4]; track $index) {
+        <div class="bg-white dark:bg-slate-800 rounded-card p-5 shadow-card">
+          <div class="skeleton h-8 w-16 mb-3 rounded"></div>
+          <div class="skeleton h-4 w-24 rounded"></div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-white dark:bg-slate-800 rounded-card p-5 shadow-card hover:-translate-y-0.5 hover:shadow-card-hover transition-all duration-200 cursor-default">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ stats()?.totalSubjects ?? 0 }}</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-slate-400 mt-1">Total Subjects</p>
+            <p class="text-xs text-gray-400 mt-0.5">This semester</p>
+          </div>
+          <div class="w-11 h-11 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-xl">📚</div>
+        </div>
+      </div>
+      <div class="bg-white dark:bg-slate-800 rounded-card p-5 shadow-card hover:-translate-y-0.5 hover:shadow-card-hover transition-all duration-200 cursor-default">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ stats()?.pendingAssignments ?? 0 }}</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-slate-400 mt-1">Pending Assignments</p>
+            <p class="text-xs text-orange-500 mt-0.5 font-medium">Needs attention</p>
+          </div>
+          <div class="w-11 h-11 bg-orange-100 dark:bg-orange-900/30 rounded-xl flex items-center justify-center text-xl">📝</div>
+        </div>
+      </div>
+      <div class="bg-white dark:bg-slate-800 rounded-card p-5 shadow-card hover:-translate-y-0.5 hover:shadow-card-hover transition-all duration-200 cursor-default">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ stats()?.upcomingDeadlines ?? 0 }}</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-slate-400 mt-1">Upcoming Deadlines</p>
+            <p class="text-xs text-gray-400 mt-0.5">Next 7 days</p>
+          </div>
+          <div class="w-11 h-11 bg-red-100 dark:bg-red-900/30 rounded-xl flex items-center justify-center text-xl">⏰</div>
+        </div>
+      </div>
+      <div class="bg-white dark:bg-slate-800 rounded-card p-5 shadow-card hover:-translate-y-0.5 hover:shadow-card-hover transition-all duration-200 cursor-default">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ stats()?.completionRate ?? 0 }}%</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-slate-400 mt-1">Completion Rate</p>
+            <div class="mt-2 w-full bg-gray-200 dark:bg-slate-700 rounded-full h-1.5">
+              <div class="bg-green-500 h-1.5 rounded-full transition-all" [style.width]="(stats()?.completionRate ?? 0) + '%'"></div>
+            </div>
+          </div>
+          <div class="w-11 h-11 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center text-xl">✅</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <div class="bg-white dark:bg-slate-800 rounded-card shadow-card">
+          <div class="flex items-center justify-between p-5 border-b border-gray-100 dark:border-slate-700">
+            <h2 class="font-semibold text-gray-900 dark:text-white">Upcoming Deadlines</h2>
+            <a routerLink="/assignments" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium">View all →</a>
+          </div>
+          <div class="divide-y divide-gray-50 dark:divide-slate-700">
+            @if (!stats()?.upcomingAssignments?.length) {
+              <div class="flex flex-col items-center justify-center py-12 text-center">
+                <span class="text-5xl mb-3">🎉</span>
+                <p class="font-medium text-gray-700 dark:text-slate-300">No pending assignments!</p>
+                <p class="text-sm text-gray-400 mt-1">You're all caught up.</p>
+              </div>
+            } @else {
+              @for (a of stats()?.upcomingAssignments; track a.id) {
+                <div class="p-4 hover:bg-gray-50 dark:hover:bg-slate-700/50 transition"
+                  [class.bg-red-50]="isDue(a.dueDate)">
+                  <div class="flex items-start gap-3">
+                    <span class="inline-flex px-2 py-0.5 rounded-md text-xs font-medium text-white flex-shrink-0 mt-0.5"
+                      [style.backgroundColor]="a.subjectColor">{{ a.subjectName }}</span>
+                    <div class="flex-1 min-w-0">
+                      <p class="font-medium text-gray-900 dark:text-white text-sm truncate">{{ a.title }}</p>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="text-xs" [class.text-red-500]="isDue(a.dueDate)" [class.text-gray-400]="!isDue(a.dueDate)">{{ daysUntil(a.dueDate) }}</span>
+                        <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+                        <span class="text-xs px-1.5 py-0.5 rounded-md font-medium" [class]="priorityClass(a.priority)">{{ a.priority }}</span>
+                      </div>
+                      <div class="mt-2 w-full bg-gray-200 dark:bg-slate-600 rounded-full h-1">
+                        <div class="bg-indigo-500 h-1 rounded-full" [style.width]="a.progress + '%'"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-1">
+        <div class="bg-white dark:bg-slate-800 rounded-card shadow-card">
+          <div class="p-5 border-b border-gray-100 dark:border-slate-700">
+            <h2 class="font-semibold text-gray-900 dark:text-white">Today's Study Schedule</h2>
+            <p class="text-xs text-gray-400 mt-0.5">{{ today | date:'EEEE, MMM d' }}</p>
+          </div>
+          <div class="p-4 space-y-3">
+            @if (!stats()?.todayStudyBlocks?.length) {
+              <div class="flex flex-col items-center justify-center py-8 text-center">
+                <span class="text-4xl mb-2">📖</span>
+                <p class="text-sm text-gray-500 dark:text-slate-400">No study sessions today</p>
+                <a routerLink="/study-planner" class="mt-2 text-xs text-indigo-600 hover:underline">Create a plan →</a>
+              </div>
+            } @else {
+              @for (block of stats()?.todayStudyBlocks; track block.id) {
+                <div class="border border-gray-100 dark:border-slate-700 rounded-xl p-3 hover:border-indigo-200 dark:hover:border-indigo-800 transition">
+                  <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                      <p class="text-xs text-gray-400 font-medium">{{ formatTime(block.startTime) }} – {{ formatTime(block.endTime) }}</p>
+                      <p class="font-semibold text-gray-900 dark:text-white text-sm mt-0.5">{{ block.subjectName }}</p>
+                      @if (block.topic) { <p class="text-xs text-gray-400">{{ block.topic }}</p> }
+                    </div>
+                    <span class="w-3 h-3 rounded-full flex-shrink-0 mt-0.5" [style.backgroundColor]="block.subjectColor"></span>
+                  </div>
+                  <div class="mt-2 w-full bg-gray-100 dark:bg-slate-700 rounded-full h-1">
+                    <div class="bg-indigo-400 h-1 rounded-full" [style.width]="block.progress + '%'"></div>
+                  </div>
+                  <button class="mt-2 w-full py-1.5 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-xs font-medium rounded-lg hover:bg-indigo-100 transition">
+                    ▶ Start Session
+                  </button>
+                </div>
+              }
+            }
+            <button class="w-full py-2.5 border border-dashed border-indigo-300 dark:border-indigo-700 text-indigo-600 dark:text-indigo-400 text-sm font-medium rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition flex items-center justify-center gap-2">
+              ✨ Optimize Plan
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
